@@ -11,12 +11,25 @@ function App() {
     changePage(newPage);
   }
 
+  const changePageBackFcn = () => {
+    let newPage = page - 1;
+    changePage(newPage);
+  }
+
   return (
     <div className="App-header">
       <header>
         <Introductions />
-        <p>{page > 0 ? page : ""}</p>
-        {page === 61 ? <p>End</p> : <Buttons changePageFcn={changePageFcn} />}
+        <div style={{textAlign: 'center'}}>
+          {page > 0 ? <p>{page}</p> : null}
+        </div>
+        {page === 61 ? 
+        <p>End</p> 
+        : 
+        <Buttons 
+        numPage={page} 
+        changePageBackFcn={changePageBackFcn} 
+        changePageFcn={changePageFcn} />}
       </header>
     </div>
   );

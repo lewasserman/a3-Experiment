@@ -5,15 +5,23 @@ import Button from '@mui/material/Button';
 function Buttons(props) {
 
   return (
-    <div style={{ textAlign: 'center' }}>
-      <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={6}>
-          <Button onClick={props.changePageFcn} variant="contained">Left</Button>
+    <div style={{ textAlign: 'center', width: '100vw', margin: '0 auto'}}>
+      {props.numPage > 0 ?  
+      <Grid justifyContent={'center'} container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid item>
+          <Button onClick={props.changePageBackFcn} variant="contained">Back</Button>
         </Grid>
-        <Grid item xs={6}>
-          <Button variant="contained">Right</Button>
+        <Grid item>
+          <Button onClick={props.changePageFcn} variant="contained">Next</Button>
+        </Grid>
+      </Grid> 
+      : 
+      <Grid justifyContent={'center'} container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid item >
+          <Button onClick={props.changePageFcn} variant="contained">Start</Button>
         </Grid>
       </Grid>
+      }
     </div>
   );
 }
