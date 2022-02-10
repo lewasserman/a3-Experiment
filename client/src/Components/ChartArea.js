@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import BarChart from './BarChart';
 
 
 
@@ -9,19 +10,25 @@ function ChartArea() {
 
   const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
-    padding: theme.spacing(1),
+    padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
   }));
 
+  useEffect(() => {
+
+  },[]);
+  
   return (
     <div>
-      <Grid justifyContent={'center'} container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Grid justifyContent={'center'} container rowSpacing={1} columnSpacing={{ xs: 3, sm: 5, md: 5 }}>
         <Grid item>
-          <Item>1</Item>
+          <Item>
+            <BarChart />
+          </Item>
         </Grid>
         <Grid item>
-          <Item>2</Item>
+          <BarChart />
         </Grid>
       </Grid>
     </div>

@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="App-header">
       <header>
-        <Introductions />
+        {<Introductions numPage={page} />}
         <div style={{textAlign: 'center'}}>
           {page > 0 ? <ChartArea/> : null}
         </div>
