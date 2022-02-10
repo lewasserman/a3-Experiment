@@ -2,6 +2,7 @@ import './App.css';
 import Introductions from './Pages/Introductions';
 import React, { useState } from 'react';
 import Buttons from './Components/Buttons';
+import ChartArea from './Components/ChartArea';
 
 function App() {
   const [page, changePage] = useState(0);
@@ -21,11 +22,11 @@ function App() {
       <header>
         <Introductions />
         <div style={{textAlign: 'center'}}>
-          {page > 0 ? <p>{page}</p> : null}
+          {page > 0 ? <ChartArea/> : null}
         </div>
         {page === 61 ? 
         <p>End</p> 
-        : 
+        :
         <Buttons 
         numPage={page} 
         changePageBackFcn={changePageBackFcn} 

@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 function Buttons(props) {
 
   return (
-    <div style={{ textAlign: 'center', width: '100vw', margin: '0 auto'}}>
+    <div>
       {props.numPage > 0 ?  
       <Grid justifyContent={'center'} container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Grid item>
