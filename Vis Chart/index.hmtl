@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>bar chart 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style type="text/css">
+      text {
+        text-anchor: middle;
+        font-family: monospace;
+        font-size: 11px;
+      }
+    </style>
+  </head>
+  <body>
+    <svg></svg>
+    <br /><button>Random</button>
+    <script type="text/javascript">
+      //todo update
+      let domainMax = 300;
+      function dotsindex() {
+        var dots = new Array();
+        for (i = 0; i < 2; i++) {
+          dots[i] = Math.floor(Math.random() * domainMax);
+        }
+        // dots index cannot be neither the same number not the adjacent number(reduce noise)
+        while (dots[0] == dots[1] || Math.abs(dots[0] - dots[1] == 1)) {
+          dots[1] = Math.floor(Math.random() * domainMax);
+        }
+        return dots;
+      }
+
+      let w = 480,
+        h = 225,
+        maxValue = 100;
+
+      let dataset = [11, 12, 15, 20, 18, 17, 16, 18, 23, 25];
+
+      let svg = d3
+        .select("svg")
+        .attr("width", w)
+        .attr("height", h)
+        .attr("stroke", "black")
+        .style("stroke-width", "2px");
+
+      let xScale = d3
+        .scaleBand()
+        .domain(d3.range(dataset.length))
+        .rangeRound([0, w])
+        .paddingInner(0.1);
+      let yScale = d3
+        .scaleLinear()
+        .domain([0, d3.max(dataset)])
+        .range([0, h]);
+
+      svg
+        .selectAll("rect")
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr("x", function (d, i) {
+          return xScale(i);
+        })
+        .attr("y", function (d) {
+          return h - yScale(d);
+        })
+        .attr("width", xScale.bandwidth())
+        .attr("height", function (d) {
+          return yScale(d);
+        })
+        .attr("fill", function (d) {
+          return "rgb(255, 255,255)";
+        });
+
+      let dots = dotsindex();
+
+      console.log("dots", dots);
+      svg
+        .append("circle")
+        .attr("cx", dots[0])
+        .attr("cy", 200)
+        .attr("r", 3)
+        .attr("fill", "black");
+
+      svg
+        .append("circle")
+        .attr("cx", dots[1])
+        .attr("cy", 200)
+        .attr("r", 3)
+        .attr("fill", "black");
+
+      d3.select("button").on("click", function () {
+        let newDataset = [];
+        for (let i = 0; i < dataset.length; i++) {
+          newDataset.push(Math.floor(Math.random() * maxValue));
+        }
+        yScale.domain([0, d3.max(newDataset)]);
+
+        svg.selectAll("circle").remove();
+
+        svg
+          .selectAll("rect")
+          .data(newDataset)
+          .transition()
+          .delay(function (d, i) {
+            return (i / newDataset.length) * 0;
+          })
+          .duration(0)
+          .ease(d3.easeLinear)
+          .attr("y", function (d) {
+            return h - yScale(d);
+          })
+          .attr("height", function (d) {
+            return yScale(d);
+          })
+          .attr("fill", function (d) {
+            return "rgb(255, 255,255)";
+          });
+
+        dots = dotsindex();
+
+        svg
+          .append("circle")
+          .attr("cx", dots[0])
+          .attr("cy", 200)
+          .attr("r", 3)
+          .attr("fill", "black");
+
+        svg
+          .append("circle")
+          .attr("cx", dots[1])
+          .attr("cy", 200)
+          .attr("r", 3)
+          .attr("fill", "black");
+      });
+    </script>
+  </body>
+</html>
