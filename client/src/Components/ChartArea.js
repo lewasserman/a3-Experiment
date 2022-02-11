@@ -27,9 +27,6 @@ function ChartArea() {
             <BarChart />
           </Item>
         </Grid>
-        <Grid item>
-          <BarChart />
-        </Grid>
       </Grid>
     </div>
   );

@@ -7,7 +7,7 @@ function Buttons(props) {
   return (
     <div>
       {props.numPage > 0 ?  
-      <Grid style={{marginTop: "10px"}} justifyContent={'center'} container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Grid style={{marginTop: "15px"}} justifyContent={'center'} container rowSpacing={2} columnSpacing={{ xs: 5, sm: 10, md: 15 }}>
         <Grid item>
           <Button onClick={props.changePageBackFcn} variant="contained">Back</Button>
         </Grid>
