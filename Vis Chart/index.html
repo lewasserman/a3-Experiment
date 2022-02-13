@@ -1,59 +1,161 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-        
-<!-- Load d3.js -->
-<script src="https://d3js.org/d3.v7.min.js"></script>
-        
-<!-- Create a div where the graph will take place -->
-<br><button>Random</button>
-<div id="my_dataviz"></div>
-<script>
+<meta charset="utf-8" />
+<style>
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    width: 960px;
+    height: 500px;
+    position: relative;
+  }
 
-// set the dimensions and margins of the graph
-const margin = {top: 10, right: 10, bottom: 10, left: 10},
-  width = 445 - margin.left - margin.right,
-  height = 445 - margin.top - margin.bottom;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 
-// append the svg object to the body of the page
-const svg = d3.select("#my_dataviz")
-.append("svg")
-  .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
-.append("g")
-  .attr("transform",
-        `translate(${margin.left}, ${margin.top})`);
+  path.slice {
+    stroke-width: 2px;
+  }
 
-// Read data
-d3.csv('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_hierarchy_1level.csv').then(function(data) {
+  polyline {
+    opacity: 0.9;
+    stroke: black;
+    stroke-width: 2px;
+    fill: none;
+  }
+</style>
+<body>
+  <button class="randomize">randomize</button>
 
-  // stratify the data: reformatting for d3.js
-  const root = d3.stratify()
-    .id(function(d) { return d.name; })   // Name of the entity (column name is name in csv)
-    .parentId(function(d) { return d.parent; })   // Name of the parent (column name is parent in csv)
-    (data);
-  root.sum(function(d) { return +d.value })   // Compute the numeric value for each entity
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    let svg = d3.select("body").append("svg").append("g");
 
-  // Then d3.treemap computes the position of each element of the hierarchy
-  // The coordinates are added to the root object above
-  d3.treemap()
-    .size([width, height])
-    .padding(0)
-    (root)
+    svg.append("g").attr("class", "slices");
+    //svg.append("g")
+    //  	.attr("class", "labels");
+    // svg.append("g")
+    // 	.attr("class", "lines");
 
-  // use this information to add rectangles:
-  svg
-    .selectAll("rect")
-    .data(root.leaves())
-    .join("rect")
-      .attr('x', function (d) { return d.x0; })
-      .attr('y', function (d) { return d.y0; })
-      .attr('width', function (d) { return d.x1 - d.x0; })
-      .attr('height', function (d) { return d.y1 - d.y0; })
-      .style("stroke", "black")
-      .style("fill", "#FFFFFF");
-  svg
-    .selectAll("text")
-    .data(root.leaves())
+    let width = 960,
+      height = 450,
+      radius = Math.min(width, height) / 2;
 
-})
-</script>
+    let pie = d3
+      .pie()
+      .sort(null)
+      .value(function (d) {
+        return d.value;
+      });
+
+    let arc = d3
+      .arc()
+      .outerRadius(radius * 0.9)
+      .innerRadius(radius * 0.0);
+
+    let outerArc = d3
+      .arc()
+      .innerRadius(radius * 0.0)
+      .outerRadius(radius * 0.9);
+
+    svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    let key = function (d) {
+      return d.data.label;
+    };
+
+    let color = d3
+      .scaleOrdinal()
+      .domain([
+        "Lorem ipsum",
+        "dolor sit",
+        "amet",
+        "consectetur",
+        "adipisicing",
+        "elit",
+        "sed",
+        "do",
+        "eiusmod",
+        "tempor",
+      ])
+      .range([
+        "#FFFFFF",
+        "#FFFFFF",
+        "#FFFFFF",
+        "#FFFFFF",
+        "#FFFFFF",
+        "#FFFFFF",
+        "#FFFFFF",
+      ]);
+
+    function randomData() {
+      let labels = color.domain();
+      return labels.map(function (label) {
+        return { label: label, value: Math.random() };
+      });
+    }
+
+    change(randomData());
+
+    d3.select(".randomize").on("click", function () {
+      change(randomData());
+    });
+
+    function change(data) {
+      /* ------- PIE SLICES -------*/
+      let slice = svg
+        .select(".slices")
+        .selectAll("path.slice")
+        .data(pie(data), key);
+
+      slice
+        .enter()
+        .insert("path")
+        .attr("stroke", "black")
+        .style("stroke-width", "2px")
+        .style("fill", function (d) {
+          return color(d.data.label);
+        })
+        .attr("class", "slice");
+
+      slice
+        .transition()
+        .duration(0)
+        .attrTween("d", function (d) {
+          this._current = this._current || d;
+          let interpolate = d3.interpolate(this._current, d);
+          this._current = interpolate(0);
+          return function (t) {
+            return arc(interpolate(t));
+          };
+        });
+
+      slice.exit().remove();
+      /* ------- SLICE TO TEXT POLYLINES -------*/
+
+      let polyline = svg
+        .select(".lines")
+        .selectAll("polyline")
+        .data(pie(data), key);
+
+      polyline.enter().append("polyline");
+
+      polyline
+        .transition()
+        .duration(0)
+        .attrTween("points", function (d) {
+          this._current = this._current || d;
+          let interpolate = d3.interpolate(this._current, d);
+          this._current = interpolate(0);
+          return function (t) {
+            let d2 = interpolate(t);
+            let pos = outerArc.centroid(d2);
+            pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+            return [arc.centroid(d2), outerArc.centroid(d2), pos];
+          };
+        });
+
+      polyline.exit().remove();
+    }
+  </script>
+</body>
