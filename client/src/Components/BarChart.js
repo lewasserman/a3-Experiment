@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react'; 
 import * as d3 from 'd3';
 import useD3 from '../hooks/useD3';
 
@@ -58,7 +58,7 @@ function BarChart() {
 
 
     return (
-        <svg ref={ref}></svg>
+        <svg id='bar-chart' ref={ref}></svg>
     )
 }
 
