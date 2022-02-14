@@ -1,5 +1,7 @@
 
 const { Pool } = require("pg");
+const express = require("express");
+const app = express();
 const http = require( 'http' ),
       fs   = require( 'fs' ),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
@@ -183,6 +185,117 @@ async function poolDemo() {
   const poolResult = await poolDemo();
   // console.log("Time with pool: " + poolResult.rows[0]["now"]);
 })();
+
+app.post( '/add-participant', express.json(), function( request, response ) {
+
+  console.log(`add-participant post request: ${request}`);
+  let dataString = ''
+
+  request.on( 'data', function( data ) {
+      dataString += data 
+  })
+
+  request.on( 'end', function() {
+    const json = JSON.parse( dataString );
+    const pool = new Pool(credentials);
+    //add participant to db
+
+    // Create a new participant ; Register a new user and get an id, which comes from the RETURNING clause.
+    const createParticipant2 = await createParticipant({
+      participantId: json.participantId,
+    });
+    console.log("Created a participant with id: " + json.participantId);
+
+    await pool.end();
+
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(json.participantId))
+  })
+})
+
+app.post( '/add-trial', express.json(), function( request, response ) {
+
+  console.log(`add-trial post request: ${request}`);
+  let dataString = ''
+
+  request.on( 'data', function( data ) {
+      dataString += data 
+  })
+
+  request.on( 'end', function() {
+    const json = JSON.parse( dataString );
+    const pool = new Pool(credentials);
+    //add participant to db
+
+    const createTrial2 = await createTrial({
+      trialId: json.trialId,
+      truePerct: json.truePerct,
+      repPerct: json.repPerct,
+      type: json.type,
+      participantId: json.participantId,
+    });
+    console.log("Created a trial with id: " + json.trialId);
+
+    await pool.end();
+
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(json.trialId))
+  })
+})
+
+app.post( '/get-all-trials', express.json(), function( request, response ) {
+
+  console.log(`get-all-trials post request: ${request}`);
+  let dataString = ''
+
+  request.on( 'data', function( data ) {
+      dataString += data 
+  })
+
+  request.on( 'end', function() {
+    const json = JSON.parse( dataString );
+    const pool = new Pool(credentials);
+    //add participant to db
+
+    const getAllTrialsResult = await getAllTrials();
+    console.log(
+      "Result of getAllTrials query: " +
+        JSON.stringify(getAllTrialsResult.rows, null, "  ")
+    );
+
+    await pool.end();
+
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(getAllTrialsResult.rows, null, "  "))
+  })
+})
+
+app.post( '/get-trials', express.json(), function( request, response ) {
+
+  console.log(`get-trials post request: ${request}`);
+  let dataString = ''
+
+  request.on( 'data', function( data ) {
+      dataString += data 
+  })
+
+  request.on( 'end', function() {
+    const json = JSON.parse( dataString );
+    const pool = new Pool(credentials);
+    //add participant to db
+
+    const getTrialsResult = await getTrials(json.participantId);
+    console.log(
+      "Result of getTrials query for participantId 123: " +
+        JSON.stringify(getTrialsResult.rows, null, "  ")
+    );
+
+    await pool.end();
+
+    response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+    response.end(JSON.stringify(getTrialsResult.rows, null, "  "))
+  })
+})
 
 
 // async function createTables() {
