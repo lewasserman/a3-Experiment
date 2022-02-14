@@ -61,7 +61,7 @@ function PieChart() {
 
 
   return (
-    <svg ref={ref}></svg>
+    <svg id='donut-chart' ref={ref}></svg>
   )
 }
 
