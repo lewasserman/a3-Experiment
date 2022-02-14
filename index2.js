@@ -17,16 +17,16 @@ const addParticipant = function(e) {
 }
 
 window.onload = function() {
-  addParticipant("examplePid");
-  addTrial(
-    {
-      trialId: "exampleTid",
-      truePerct: 50,
-      repPerct: 60,
-      type: "bar",
-      participantId: "examplePid"
-    }
-  );
-  getAllTrials();
-  getTrial("examplePid");
+  // addParticipant("examplePid");
+  // addTrial(
+  //   {
+  //     trialId: "exampleTid",
+  //     truePerct: 50,
+  //     repPerct: 60,
+  //     type: "bar",
+  //     participantId: "examplePid"
+  //   }
+  // );
+  // getAllTrials();
+  // getTrial("examplePid");
 }
