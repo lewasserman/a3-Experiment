@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import BarChart from './BarChart';
+import PieChart from './PieChart';
 
 
 
@@ -18,13 +19,15 @@ function ChartArea() {
   useEffect(() => {
 
   },[]);
+
+  let charts = [ <BarChart />, <PieChart /> ];
   
   return (
     <div>
       <Grid justifyContent={'center'} container rowSpacing={1} columnSpacing={{ xs: 3, sm: 5, md: 5 }}>
         <Grid item>
           <Item>
-            <BarChart />
+            {charts[Math.floor(Math.random() * charts.length)]}
           </Item>
         </Grid>
       </Grid>

@@ -61,9 +61,9 @@ function App() {
           :
           <div>
             <Grid style={{ marginTop: "15px" }} justifyContent={'center'} container rowSpacing={2} >
-              <Grid item>
+              {page > 0 ? <Grid item>
                 <CssTextField
-                  label="Custom CSS"
+                  label="Percentage of Difference"
                   InputLabelProps={
                     {
                       style: {
@@ -72,7 +72,7 @@ function App() {
                     }
                   }
                   id="custom-css-outlined-input" />
-              </Grid>
+              </Grid> : <></>}
               <Grid item xs={12}>
                 <Buttons
                   numPage={page}

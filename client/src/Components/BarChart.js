@@ -4,6 +4,13 @@ import useD3 from '../hooks/useD3';
 
 function BarChart() {
 
+    const generateRandomData = () => {
+        const data = [];
+        for (let i = 0; i < 10; i++) {
+            data.push(Math.floor(Math.random() * 100));
+        }
+        return data;
+    }
 
     const ref = useD3(
         (svg) => {
@@ -12,7 +19,7 @@ function BarChart() {
                 h = 225,
                 maxValue = 100;
 
-            let dataset = [11, 12, 15, 20, 18, 17, 16, 18, 23, 25]
+            let dataset = generateRandomData()
 
             
                 svg.attr("width", w)
