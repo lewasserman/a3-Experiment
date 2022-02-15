@@ -6,7 +6,7 @@ https://dacs30.github.io/a3-Experiment/
 
 # General description
 
-We used react to create the front-end for our experiment. We first show the user 20 bar charts, then 20 donut charts, and finally 20 pie charts. We then display the resulting csv with their data.
+We used react to create the front-end for our experiment. We first show the user 25 bar charts, then 25 donut charts, and finally 25 pie charts. We then display the resulting csv with their data.
 The following are example graphs for each graph type that we used (bar, donut, and pie).
 
 ![exBar](B1.png)
