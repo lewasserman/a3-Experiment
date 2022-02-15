@@ -4,12 +4,11 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import BarChart from './BarChart';
 import PieChart from './PieChart';
+import TreeChart from './TreeChart';
 
 
 
-function ChartArea() {
-
-  const [currentChart, changeCurrentChart] = useState(0);
+function ChartArea(props) {
 
   const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -18,19 +17,20 @@ function ChartArea() {
     color: theme.palette.text.secondary,
   }));
 
-  useEffect(() => {
-    changeCurrentChart([Math.floor(Math.random() * charts.length)]);
-  }, []);
-
-  let charts = [ <BarChart />, <PieChart /> ];
+  let charts = [ <BarChart />, <PieChart />, <TreeChart /> ];
 
   return (
     <div>
       <Grid justifyContent={'center'} container rowSpacing={1} columnSpacing={{ xs: 3, sm: 5, md: 5 }}>
         <Grid item>
           <Item>
-            {/* {currentChart? charts[currentChart] : null} */}
-            {charts[Math.floor(Math.random() * charts.length)]}
+            {/* {props.numPage < 11 ? charts[0] : props.numPage < 21 ? charts[1] : charts[2]} */}
+            {props.numPage ? 
+            <img
+            style={{width: '350px'}}
+            src={require(`../Charts/${props.numPage < 11 ? "B" + props.numPage + ".png" : props.numPage < 21 ? "D" + (props.numPage - 10) + ".png" : "P" + (props.numPage - 20) + ".png"}`)} 
+            alt="barChart" />
+            : null}
           </Item>
         </Grid>
       </Grid>

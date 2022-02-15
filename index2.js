@@ -1,5 +1,5 @@
 const addParticipant = function(e) {
-  const json = { username: currentUserHome2.innerHTML },
+  const json = { participantId: e.participantId },
         body = JSON.stringify( json )
 
     fetch( '/add-participant', {
@@ -17,7 +17,9 @@ const addParticipant = function(e) {
 }
 
 window.onload = function() {
-  // addParticipant("examplePid");
+  addParticipant({
+    participantId: "examplePid"
+  });
   // addTrial(
   //   {
   //     trialId: "exampleTid",
