@@ -3,6 +3,9 @@ Assignment 3 - Replicating a Classic Experiment
 
 https://dacs30.github.io/a3-Experiment/
 
+
+# General description
+
 We used react to create the front-end for our experiment. We first show the user 20 bar charts, then 20 donut charts, and finally 20 pie charts. We then display the resulting csv with their data.
 The following are example graphs for each graph type that we used (bar, donut, and pie).
 
@@ -24,6 +27,16 @@ We performed statisical analysis on the collected data. Here are the result grap
 
 ![graphTypes](graphTypes.png)
 
+# Code
+The react app structure is the traditional pages, components, hooks set up. App.js runs mos of the code, charts are rendered within the
+ChartArea component and the intputs like buttons are handled in a different component called Buttons. The only hook used was useD3 that
+waits the data to be fetched before calling the D3 SVGs.
+
+
+# Technical challenges
+The first big technical challenge was integrating react with D3. In order to do that we had to create a special hook for the D3 plots. Another
+issue that we faced was the creation of an API with database so the user won't have to send us the CSV after its trial. Because of time
+we ended up not building the API for that.
 
 
 
