@@ -8,15 +8,15 @@ The following are example graphs for each graph type that we used (bar, donut, a
 
 ![exBar](B1.png)
 
-![exBarReact](exbar3.png)
+![exBarReact](exbar3.PNG)
 
 ![exDonut](D3.png)
 
-![exDonutReact](exDonut2.png)
+![exDonutReact](exDonut2.PNG)
 
 ![exPie](P2.png)
 
-![exPieReact](exPie2.png)
+![exPieReact](exPie2.PNG)
 
 We performed statisical analysis on the collected data. Here are the result graphs.
 
