@@ -187,6 +187,7 @@ async function poolDemo() {
   // console.log("Time with pool: " + poolResult.rows[0]["now"]);
 })();
 
+<<<<<<< Updated upstream
 app.post('/add-participant', express.json(), async (req, res) => {
   try {
     const participantId = req.body.participantId;
@@ -199,6 +200,9 @@ app.post('/add-participant', express.json(), async (req, res) => {
     next(error);
   }
 });
+=======
+app.post( '/add-participant', express.json(), async ( request, response ) => {
+>>>>>>> Stashed changes
 
 // app.post( '/add-participant', express.json(), function( request, response ) {
 
@@ -311,6 +315,9 @@ app.post('/add-participant', express.json(), async (req, res) => {
 //   })
 // })
 
+app.get("/index", (request, response) => {
+  response.render("index");
+});
 
 // async function createTables() {
 //   const text = `
