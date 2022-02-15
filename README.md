@@ -38,7 +38,7 @@ The first big technical challenge was integrating react with D3. In order to do 
 issue that we faced was the creation of an API with database so the user won't have to send us the CSV after its trial. Because of time
 we ended up not building the API for that.
 
-
+# Project proposal
 
 For the scope of this project, assume the role of a scientist who runs experiments for a living.
 
